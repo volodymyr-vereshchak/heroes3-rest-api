@@ -1,0 +1,4 @@
+venv
+settings.json
+.mypy.ini
+__pycache__
