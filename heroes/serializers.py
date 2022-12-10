@@ -28,7 +28,7 @@ class TownSerializer(serializers.ModelSerializer):
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
-        fields = ("id", "attack", "defence", "power", "knowledge")
+        fields = ("id", "attack", "defense", "power", "knowledge")
 
 
 class ClassSerializer(serializers.ModelSerializer):

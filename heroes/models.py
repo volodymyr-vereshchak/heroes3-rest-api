@@ -72,7 +72,7 @@ class Creature(models.Model):
 
 
 class Specialty(models.Model):
-    creature = models.ForeignKey(Creatures, on_delete=models.CASCADE)
+    creature = models.ForeignKey(Creature, on_delete=models.CASCADE)
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     spell = models.ForeignKey(Spell, on_delete=models.CASCADE)
     secondary_skill = models.ForeignKey(SecondarySkill, on_delete=models.CASCADE)
@@ -82,6 +82,6 @@ class Hero(models.Model):
     name = models.CharField(max_length=16)
     hero_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE)
-    seondary_skill_first = models.ForeignKey(SecondarySkill, related_name="first_skill", on_delete=models.CASCADE)
+    secondary_skill_first = models.ForeignKey(SecondarySkill, related_name="first_skill", on_delete=models.CASCADE)
     secondary_skill_second = models.ForeignKey(SecondarySkill, related_name="second_skill", on_delete=models.CASCADE)
     spell = models.ForeignKey(Spell, on_delete=models.CASCADE)
