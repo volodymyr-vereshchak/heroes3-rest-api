@@ -45,7 +45,7 @@ class Spell(models.Model):
     description = models.TextField()
 
 
-class Creatures(models.Model):
+class Creature(models.Model):
     class Upgrade(models.IntegerChoices):
         BASE = 0
         UPGRADE = 1

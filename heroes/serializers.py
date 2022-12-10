@@ -7,7 +7,7 @@ from heroes.models import (
     Class,
     SecondarySkill,
     Spell,
-    Creatures,
+    Creature,
     Specialty,
     Hero,
 )
@@ -37,7 +37,7 @@ class ClassSerializer(serializers.ModelSerializer):
         fields = ("id", "name", "skills")
 
 
-class SecondaeySkillSerializer(serializers.ModelSerializer):
+class SecondarySkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = SecondarySkill
         fields = ("id", "name", "level", "description")
@@ -49,9 +49,9 @@ class SpellSerializer(serializers.ModelSerializer):
         fields = ("id", "name", "level", "description")
 
 
-class CreaturesSerializer(serializers.ModelSerializer):
+class CreatureSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Creatures
+        model = Creature
         fields = (
             "id",
             "name",
@@ -82,7 +82,7 @@ class SpecialtySerializer(serializers.ModelSerializer):
         fields = ("id", "creature", "resource", "spell", "secondary_skill")
 
 
-class HeroesSerializer(serializers.ModelSerializer):
+class HeroSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hero
         fields = (
