@@ -45,10 +45,6 @@ class Spell(models.Model):
     description = models.TextField()
 
 
-class HeroesClass(models.Model):
-    name = models.CharField(max_length=16)
-
-
 class Creatures(models.Model):
     class Upgrade(models.IntegerChoices):
         BASE = 0
@@ -82,7 +78,7 @@ class Specialty(models.Model):
     secondary_skill = models.ForeignKey(SecondarySkill, on_delete=models.CASCADE)
 
 
-class Heroes(models.Model):
+class Hero(models.Model):
     name = models.CharField(max_length=16)
     hero_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE)
