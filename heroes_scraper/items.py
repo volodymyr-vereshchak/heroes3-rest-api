@@ -4,9 +4,12 @@
 # https://docs.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+from scrapy_djangoitem import DjangoItem
+
+from heroes.models import (
+    Town,
+)
 
 
-class HeroesScraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class TownItem(DjangoItem):
+    django_model = Town

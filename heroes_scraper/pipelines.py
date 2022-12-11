@@ -6,8 +6,11 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+from asgiref.sync import sync_to_async
 
 
 class HeroesScraperPipeline:
+    @sync_to_async
     def process_item(self, item, spider):
+        item.save()
         return item

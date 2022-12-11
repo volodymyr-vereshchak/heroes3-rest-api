@@ -24,7 +24,7 @@ class Resource(models.Model):
 
 
 class Town(models.Model):
-    name = models.CharField(max_length=16)
+    name = models.CharField(max_length=16, unique=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
 
     def __str__(self) -> str:
