@@ -7,6 +7,7 @@ dill==0.3.6
 Django==4.1.4
 django-stubs==1.13.1
 django-stubs-ext==0.7.0
+djangorestframework==3.14.0
 isort==5.10.1
 lazy-object-proxy==1.8.0
 mccabe==0.7.0
@@ -17,6 +18,7 @@ platformdirs==2.6.0
 pylint==2.15.8
 pylint-django==2.5.3
 pylint-plugin-utils==0.7
+pytz==2022.6
 sqlparse==0.4.3
 tomli==2.0.1
 tomlkit==0.11.6
