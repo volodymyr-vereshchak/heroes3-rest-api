@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
+
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +46,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -118,6 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = "/static/"
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = "/media/"
@@ -126,3 +131,15 @@ MEDIA_ROOT = "/media/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+DEFAULT_FILE_STORAGE = "heroes3_api.storage.DropboxStorage"
+# DROPBOX_OAUTH2_TOKEN = os.environ.get("DROPBOX_OAUTH2_TOKEN")
+# DROPBOX_APP_KEY = os.environ.get("DROPBOX_APP_KEY")
+# DROPBOX_APP_SECRET = os.environ.get("DROPBOX_APP_SECRET")
+# DROPBOX_OAUTH2_REFRESH_TOKEN = os.environ.get("DROPBOX_OAUTH2_REFRESH_TOKEN")
+DROPBOX_OAUTH2_TOKEN = "sl.BUzfJbo1gAO2h2tccGVI2n3fsLxn6becMaAmx8Reg0Eg70dDLQFImaNHHjeawEGfXODVy9Z2UYNxX4UYFd_P_n0IvDwseiua6TB1JfLPV64iExU7GwZvW_FTdAQTecCgDa3R62M"
+DROPBOX_APP_KEY = "hi4ig71g1fd9uqb"
+DROPBOX_APP_SECRET = "cwtq51p07yfi6cf"
+DROPBOX_OAUTH2_REFRESH_TOKEN = "Ru3g2gR8BgEAAAAAAAAAAUtkCc3Dt7f5gSbWHXBdvUVGd2_yvfIo-S4nGtcxfnRz"
+DROPBOX_ROOT_PATH = "/"

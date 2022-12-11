@@ -3,3 +3,5 @@ settings.json
 .mypy.ini
 __pycache__
 db.sqlite3
+.env
+/heroes_scraper/download

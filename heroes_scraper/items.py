@@ -12,4 +12,5 @@ from heroes.models import (
 
 
 class TownItem(DjangoItem):
+    images = scrapy.Field()
     django_model = Town

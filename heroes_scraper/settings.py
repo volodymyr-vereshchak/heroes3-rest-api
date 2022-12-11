@@ -7,6 +7,10 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+
+import os
+
+
 BOT_NAME = 'heroes_scraper'
 
 SPIDER_MODULES = ['heroes_scraper.spiders']
@@ -64,6 +68,7 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'heroes_scraper.pipelines.HeroesScraperPipeline': 300,
+   'scrapy.pipelines.images.ImagesPipeline': 1
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -90,3 +95,6 @@ ITEM_PIPELINES = {
 # Set settings whose default value is deprecated to a future-proof value
 REQUEST_FINGERPRINTER_IMPLEMENTATION = '2.7'
 TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
+
+IMAGES_STORE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "/download/img/")
+IMAGES_URLS_FIELD = "picture_url"
