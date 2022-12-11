@@ -15,5 +15,5 @@ class TownScraper(scrapy.Spider):
         for town in response.css("tbody span a img")[:10]:
             item = TownItem()
             item["name"] = town.css("img::attr(alt)").extract_first()
-            item["picture_url"] = town.css("img::attr(src)").extract_first()
+            item["picture_url"] = urljoin(BASE_URL, town.css("img::attr(src)").extract_first())
             yield item
