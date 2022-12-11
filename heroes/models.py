@@ -1,4 +1,15 @@
+import os
+import uuid
+
 from django.db import models
+from django.utils.text import slugify
+
+
+def image_file_path(instance, filename):
+    _, extension = os.path.splitext(filename)
+
+    filename = f"{slugify(instance.name)}-{uuid.uuid4()}{extension}"
+    return os.path.join(f"img/{type(instance).__name__}/", filename)
 
 
 class Level(models.IntegerChoices):
@@ -9,10 +20,12 @@ class Level(models.IntegerChoices):
 
 class Resource(models.Model):
     name = models.CharField(max_length=16)
+    picture_url = models.ImageField(upload_to=image_file_path, null=True)
 
 
 class Town(models.Model):
     name = models.CharField(max_length=16)
+    picture_url = models.ImageField(upload_to=image_file_path, null=True)
 
     def __str__(self) -> str:
         return f"Town: {self.name}"
@@ -37,12 +50,14 @@ class SecondarySkill(models.Model):
     name = models.CharField(max_length=32)
     level = models.PositiveIntegerField(choices=Level.choices)
     description = models.TextField()
+    picture_url = models.ImageField(upload_to=image_file_path, null=True)
 
 
 class Spell(models.Model):
     name = models.CharField(max_length=64)
     level = models.PositiveIntegerField(choices=Level.choices)
     description = models.TextField()
+    picture_url = models.ImageField(upload_to=image_file_path, null=True)
 
 
 class Creature(models.Model):
@@ -69,6 +84,7 @@ class Creature(models.Model):
     sulfur = models.PositiveSmallIntegerField()
     crystal = models.PositiveIntegerField()
     gems = models.PositiveSmallIntegerField()
+    picture_url = models.ImageField(upload_to=image_file_path, null=True)
 
 
 class Specialty(models.Model):
@@ -85,3 +101,4 @@ class Hero(models.Model):
     secondary_skill_first = models.ForeignKey(SecondarySkill, related_name="first_skill", on_delete=models.CASCADE)
     secondary_skill_second = models.ForeignKey(SecondarySkill, related_name="second_skill", on_delete=models.CASCADE)
     spell = models.ForeignKey(Spell, on_delete=models.CASCADE)
+    picture_url = models.ImageField(upload_to=image_file_path, null=True)

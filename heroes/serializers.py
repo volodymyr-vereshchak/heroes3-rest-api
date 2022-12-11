@@ -16,13 +16,13 @@ from heroes.models import (
 class ResourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resource
-        fields = ("id", "name")
+        fields = ("id", "name", "picture_url")
 
 
 class TownSerializer(serializers.ModelSerializer):
     class Meta:
         model = Town
-        fields = ("id", "name")
+        fields = ("id", "name", "picture_url")
 
 
 class SkillSerializer(serializers.ModelSerializer):
@@ -40,13 +40,13 @@ class ClassSerializer(serializers.ModelSerializer):
 class SecondarySkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = SecondarySkill
-        fields = ("id", "name", "level", "description")
+        fields = ("id", "name", "level", "description", "picture_url")
 
 
 class SpellSerializer(serializers.ModelSerializer):
     class Meta:
         model = Spell
-        fields = ("id", "name", "level", "description")
+        fields = ("id", "name", "level", "description", "picture_url")
 
 
 class CreatureSerializer(serializers.ModelSerializer):
@@ -72,7 +72,8 @@ class CreatureSerializer(serializers.ModelSerializer):
             "mercury",
             "sulfur",
             "crystal",
-            "gems"
+            "gems",
+            "picture_url"
         )
 
 
@@ -92,5 +93,6 @@ class HeroSerializer(serializers.ModelSerializer):
             "specialty", 
             "secondary_skill_first",
             "secondary_skill_second",
-            "spell"
+            "spell",
+            "picture_url"
         )
