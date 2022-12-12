@@ -6,6 +6,8 @@ from heroes_scraper.items import TownItem
 
 BASE_URL = "https://heroes.thelazy.net/index.php/"
 TOWN_URL = urljoin(BASE_URL, "Main_Page")
+CREATURE_URL = urljoin(BASE_URL, "List_of_creatures")
+
 
 class TownScraper(scrapy.Spider):
     name = "h3town"
@@ -17,3 +19,11 @@ class TownScraper(scrapy.Spider):
             item["name"] = town.css("img::attr(alt)").extract_first()            
             item["picture_url"] = [urljoin(BASE_URL, town.css("img::attr(src)").extract_first())]
             yield item
+
+
+class CreatureScraper(scrapy.Spider):
+    name = "h3creature"
+    start_urls = [CREATURE_URL]
+    
+    def parse(self, response, **kwargs):
+        return super().parse(response, **kwargs)

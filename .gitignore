@@ -5,3 +5,4 @@ __pycache__
 db.sqlite3
 .env
 /heroes_scraper/download
+.idea
