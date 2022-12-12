@@ -78,12 +78,6 @@ class Creature(models.Model):
     growth = models.PositiveIntegerField()
     ai_value = models.PositiveIntegerField()
     gold = models.PositiveSmallIntegerField()
-    wood = models.PositiveSmallIntegerField()
-    ore = models.PositiveSmallIntegerField()
-    mercury = models.PositiveSmallIntegerField()
-    sulfur = models.PositiveSmallIntegerField()
-    crystal = models.PositiveIntegerField()
-    gems = models.PositiveSmallIntegerField()
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
 
 

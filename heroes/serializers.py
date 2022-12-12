@@ -67,12 +67,6 @@ class CreatureSerializer(serializers.ModelSerializer):
             "growth",
             "ai_value",
             "gold",
-            "wood",
-            "ore",
-            "mercury",
-            "sulfur",
-            "crystal",
-            "gems",
             "picture_url"
         )
 
