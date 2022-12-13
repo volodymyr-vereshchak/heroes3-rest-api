@@ -31,17 +31,17 @@ class CreatureScraper(scrapy.Spider):
     def parse(self, response: scrapy.http.Response, **kwargs) -> scrapy.Request:
         for creature in response.css("tbody tr")[1:]:
             item = CreatureItem()
-            item["picture_url"] = urljoin(
+            item["picture_url"] = [urljoin(
                 BASE_URL, creature.css("td:first-child > a:first-child > img::attr(src)").get()
-            )
+            )]
             item["name"] = creature.css("td:first-child > a.mw-redirect::attr(title)").get()
             item["town"] = creature.css("td:nth-child(2) > span > a::attr(title)").get()
             item["level"] = creature.css("[title=Level]::text").get()
             item["upgrade"] = creature.css("[title=Level] sup::text").get()
             item["attack"] = creature.css("[title=Attack]::text").get()
-            item["defence"] = creature.css("[title=Defence]::text").get()
-            item["min_damage"] = creature.css("[title=Minimum Damage]::text").get()
-            item["max_damage"] = creature.css("[title=Maximum Damage]::text").get()
+            item["defence"] = creature.css("[title=Defense]::text").get()
+            item["min_damage"] = creature.css("[title='Minimum Damage']::text").get()
+            item["max_damage"] = creature.css("[title='Maximum Damage']::text").get()
             item["hp"] = creature.css("[title=Health]::text").get()
             item["speed"] = creature.css("[title=Speed]::text").get()
             item["growth"] = creature.css("[title=Growth]::text").get()

@@ -28,16 +28,25 @@ class HeroesScraperPipeline:
                 serializer.save()
         
         if spider.name == "h3creature":
-            town = Town.objects.get(name=item["name"])            
+            town = Town.objects.get(name=item["town"])
             serializer = CreatureSerializer(
                 data={
                     "name": item["name"],
-                    "town": town,
+                    "town": town.id,
                     "level": int(item["level"]),
                     "upgrade": item["upgrade"],
                     "attack": int(item["attack"]),
                     "defence": int(item["defence"]),
-                    
+                    "min_damage": int(item["min_damage"]),
+                    "max_damage": int(item["max_damage"]),
+                    "hp": int(item["hp"]),
+                    "speed": int(item["speed"]),
+                    "growth": int(item["growth"]),
+                    "ai_value": int(item["ai_value"]),
+                    "gold": int(item["gold"]),
+                    "picture_url": File(open(os.path.join(IMAGES_STORE, item["images"][0]["path"]), "rb"))
                 }
             )
+            if serializer.is_valid():
+                serializer.save()
         return item

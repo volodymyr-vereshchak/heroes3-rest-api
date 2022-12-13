@@ -2,7 +2,10 @@ from django.core.management.base import BaseCommand
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
-from heroes_scraper.spiders.heroes_spyder import TownScraper
+from heroes_scraper.spiders.heroes_spyder import(
+    TownScraper,
+    CreatureScraper
+)
 
 
 class Command(BaseCommand):
@@ -12,4 +15,5 @@ class Command(BaseCommand):
         process = CrawlerProcess(get_project_settings())
 
         process.crawl(TownScraper)
+        process.crawl(CreatureScraper)
         process.start()
