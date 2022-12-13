@@ -61,14 +61,10 @@ class Spell(models.Model):
 
 
 class Creature(models.Model):
-    class Upgrade(models.IntegerChoices):
-        BASE = 0
-        UPGRADE = 1
-
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     town = models.ForeignKey(Town, on_delete=models.CASCADE)
     level = models.PositiveIntegerField()
-    upgrade = models.PositiveIntegerField(choices=Upgrade.choices)
+    upgrade = models.BooleanField()
     attack = models.PositiveIntegerField()
     defence = models.PositiveIntegerField()
     min_damage = models.PositiveIntegerField()

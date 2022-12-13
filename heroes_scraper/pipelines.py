@@ -8,9 +8,15 @@
 import os
 from asgiref.sync import sync_to_async
 
-from heroes.serializers import TownSerializer
-from heroes_scraper.settings import IMAGES_STORE
 from django.core.files import File
+from heroes_scraper.settings import IMAGES_STORE
+from heroes.serializers import (
+    TownSerializer,
+    CreatureSerializer
+)
+from heroes.models import (
+    Town
+)
 
 
 class HeroesScraperPipeline:
@@ -20,4 +26,18 @@ class HeroesScraperPipeline:
             serializer = TownSerializer(data={"name": item["name"], "picture_url": File(open(os.path.join(IMAGES_STORE, item["images"][0]["path"]), "rb"))})
             if serializer.is_valid():
                 serializer.save()
+        
+        if spider.name == "h3creature":
+            town = Town.objects.get(name=item["name"])            
+            serializer = CreatureSerializer(
+                data={
+                    "name": item["name"],
+                    "town": town,
+                    "level": int(item["level"]),
+                    "upgrade": item["upgrade"],
+                    "attack": int(item["attack"]),
+                    "defence": int(item["defence"]),
+                    
+                }
+            )
         return item
