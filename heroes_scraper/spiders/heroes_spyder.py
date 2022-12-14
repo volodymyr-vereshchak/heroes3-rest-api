@@ -3,13 +3,15 @@ from urllib.parse import urljoin
 
 from heroes_scraper.items import (
     TownItem,
-    CreatureItem
+    CreatureItem,
+    SpellItem
 )
 
 
-BASE_URL = "https://heroes.thelazy.net/index.php/"
-TOWN_URL = urljoin(BASE_URL, "Main_Page")
-CREATURE_URL = urljoin(BASE_URL, "List_of_creatures")
+BASE_URL = "https://heroes.thelazy.net/"
+TOWN_URL = urljoin(BASE_URL, "index.php/Main_Page")
+CREATURE_URL = urljoin(BASE_URL, "index.php/List_of_creatures")
+SPELL_URL = urljoin(BASE_URL, "index.php/List_of_spells")
 
 
 class TownScraper(scrapy.Spider):
@@ -48,3 +50,19 @@ class CreatureScraper(scrapy.Spider):
             item["ai_value"] = creature.css("[title=AI_Value]::text").get()
             item["gold"] = creature.css("td:nth-child(12)::text").get().replace(u"\xa0", u"")
             yield item
+
+
+class SpellScraper(scrapy.Spider):
+    name = "h3spell"
+    start_urls = [SPELL_URL]
+    
+    def parse_detail(self, response, **kwargs):
+        return None
+
+    def parse(self, response, **kwargs):
+        for spell_tag in response.css("tbody tr")[1:]:
+            spell_url = spell_tag.css("td:nth-child(1) > a:nth-child(2)::attr(href)").get()
+            yield scrapy.Request(
+                url=urljoin(BASE_URL, spell_url),
+                callback=self.parse_detail
+            )
