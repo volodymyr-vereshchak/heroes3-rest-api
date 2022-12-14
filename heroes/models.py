@@ -55,8 +55,15 @@ class SecondarySkill(models.Model):
 
 
 class Spell(models.Model):
+    class MagicSchool(models.IntegerChoices):
+        FIRE = 0
+        AIR = 1
+        EARTH = 2
+        WATER = 3
+
     name = models.CharField(max_length=64, unique=True)
     level = models.PositiveIntegerField()
+    magic_school = models.PositiveIntegerField(choices=MagicSchool.choices)
     description_base = models.TextField()
     description_advance = models.TextField()
     description_expert = models.TextField()
