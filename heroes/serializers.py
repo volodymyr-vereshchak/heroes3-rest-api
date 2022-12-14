@@ -40,13 +40,29 @@ class ClassSerializer(serializers.ModelSerializer):
 class SecondarySkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = SecondarySkill
-        fields = ("id", "name", "level", "description", "picture_url")
+        fields = (
+            "id",
+            "name",
+            "level",
+            "description_base",
+            "description_advance",
+            "description_expert",
+            "picture_url"
+        )
 
 
 class SpellSerializer(serializers.ModelSerializer):
     class Meta:
         model = Spell
-        fields = ("id", "name", "level", "description", "picture_url")
+        fields = (
+            "id",
+            "name",
+            "level",
+            "description_base",
+            "description_advance",
+            "description_expert",
+            "picture_url"
+        )
 
 
 class CreatureSerializer(serializers.ModelSerializer):

@@ -12,12 +12,6 @@ def image_file_path(instance, filename):
     return os.path.join(f"img/{type(instance).__name__}/", filename)
 
 
-class Level(models.IntegerChoices):
-    BASE = 0
-    ADVANCED = 1
-    EXPERT = 2
-
-
 class Resource(models.Model):
     name = models.CharField(max_length=16)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
@@ -47,22 +41,31 @@ class Class(models.Model):
     
 
 class SecondarySkill(models.Model):
-    name = models.CharField(max_length=32)
+    class Level(models.IntegerChoices):
+        BASE = 0
+        ADVANCED = 1
+        EXPERT = 2
+
+    name = models.CharField(max_length=32, unique=True)
     level = models.PositiveIntegerField(choices=Level.choices)
-    description = models.TextField()
+    description_base = models.TextField()
+    description_advance = models.TextField()
+    description_expert = models.TextField()
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
 
 
 class Spell(models.Model):
-    name = models.CharField(max_length=64)
-    level = models.PositiveIntegerField(choices=Level.choices)
-    description = models.TextField()
+    name = models.CharField(max_length=64, unique=True)
+    level = models.PositiveIntegerField()
+    description_base = models.TextField()
+    description_advance = models.TextField()
+    description_expert = models.TextField()
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
 
 
 class Creature(models.Model):
     name = models.CharField(max_length=64, unique=True)
-    town = models.ForeignKey(Town, on_delete=models.CASCADE)
+    town = models.ForeignKey(Town, on_delete=models.CASCADE, null=True)
     level = models.PositiveIntegerField()
     upgrade = models.BooleanField()
     attack = models.PositiveIntegerField()

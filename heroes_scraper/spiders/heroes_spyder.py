@@ -34,7 +34,7 @@ class CreatureScraper(scrapy.Spider):
             item["picture_url"] = [urljoin(
                 BASE_URL, creature.css("td:first-child > a:first-child > img::attr(src)").get()
             )]
-            item["name"] = creature.css("td:first-child > a.mw-redirect::attr(title)").get()
+            item["name"] = creature.css("td:nth-child(1) > a:nth-child(2)::attr(title)").get()
             item["town"] = creature.css("td:nth-child(2) > span > a::attr(title)").get()
             item["level"] = creature.css("[title=Level]::text").get()
             item["upgrade"] = creature.css("[title=Level] sup::text").get()

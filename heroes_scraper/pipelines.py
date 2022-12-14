@@ -28,13 +28,16 @@ class HeroesScraperPipeline:
                 serializer.save()
         
         if spider.name == "h3creature":
-            town = Town.objects.get(name=item["town"])
+            try:
+                town = Town.objects.get(name=item["town"])
+            except Town.DoesNotExist:
+                town = None
             serializer = CreatureSerializer(
                 data={
                     "name": item["name"],
-                    "town": town.id,
+                    "town": town.id if town else None,
                     "level": int(item["level"]),
-                    "upgrade": item["upgrade"],
+                    "upgrade": True if item["upgrade"] else False,
                     "attack": int(item["attack"]),
                     "defence": int(item["defence"]),
                     "min_damage": int(item["min_damage"]),
