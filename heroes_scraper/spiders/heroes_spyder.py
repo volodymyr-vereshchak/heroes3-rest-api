@@ -1,4 +1,5 @@
 import scrapy
+import re
 from urllib.parse import urljoin
 
 from heroes_scraper.items import (
@@ -57,7 +58,15 @@ class SpellScraper(scrapy.Spider):
     start_urls = [SPELL_URL]
     
     def parse_detail(self, response, **kwargs):
-        return None
+        item = SpellItem()
+        item["name"] = response.css("table:nth-child(2) > tbody > tr:nth-child(1) > td > b::text").get()
+        item["level"] = response.css("tbody > tr:nth-child(4) > td:nth-child(2)::text").get()
+        item["magic_school"] = response.css("tbody > tr:nth-child(3) > td:nth-child(2) > a::text").get()
+        item["description_base"] = "".join(response.xpath("//table[2]/tbody/tr[8]/td/table/tbody/tr/td//text()").getall()).strip()
+        item["description_advance"] = "".join(response.xpath("//table[2]/tbody/tr[10]/td/table/tbody/tr/td//text()").getall()).strip()
+        item["description_expert"] = "".join(response.xpath("//table[2]/tbody/tr[12]/td/table/tbody/tr/td//text()").getall()).strip()
+        item["picture_url"] = [urljoin(BASE_URL, response.css("table:nth-child(2) > tbody > tr:nth-child(2) > td > a > img::attr(src)").get())]
+        yield item
 
     def parse(self, response, **kwargs):
         for spell_tag in response.css("tbody tr")[1:]:

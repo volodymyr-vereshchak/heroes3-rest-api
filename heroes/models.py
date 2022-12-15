@@ -48,9 +48,9 @@ class SecondarySkill(models.Model):
 
     name = models.CharField(max_length=32, unique=True)
     level = models.PositiveIntegerField(choices=Level.choices)
-    description_base = models.TextField()
-    description_advance = models.TextField()
-    description_expert = models.TextField()
+    description_base = models.TextField(null=True)
+    description_advance = models.TextField(null=True)
+    description_expert = models.TextField(null=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
 
 
@@ -63,10 +63,10 @@ class Spell(models.Model):
 
     name = models.CharField(max_length=64, unique=True)
     level = models.PositiveIntegerField()
-    magic_school = models.PositiveIntegerField(choices=MagicSchool.choices)
-    description_base = models.TextField()
-    description_advance = models.TextField()
-    description_expert = models.TextField()
+    magic_school = models.PositiveIntegerField(choices=MagicSchool.choices, null=True)
+    description_base = models.TextField(null=True)
+    description_advance = models.TextField(null=True)
+    description_expert = models.TextField(null=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
 
 

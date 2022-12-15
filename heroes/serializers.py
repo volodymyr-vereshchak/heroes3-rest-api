@@ -58,6 +58,7 @@ class SpellSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "level",
+            "magic_school",
             "description_base",
             "description_advance",
             "description_expert",

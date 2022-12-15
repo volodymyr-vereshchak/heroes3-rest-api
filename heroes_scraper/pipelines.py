@@ -12,7 +12,8 @@ from django.core.files import File
 from heroes_scraper.settings import IMAGES_STORE
 from heroes.serializers import (
     TownSerializer,
-    CreatureSerializer
+    CreatureSerializer,
+    SpellSerializer
 )
 from heroes.models import (
     Town
@@ -47,6 +48,42 @@ class HeroesScraperPipeline:
                     "growth": int(item["growth"]),
                     "ai_value": int(item["ai_value"]),
                     "gold": int(item["gold"]),
+                    "picture_url": File(open(os.path.join(IMAGES_STORE, item["images"][0]["path"]), "rb"))
+                }
+            )
+            if serializer.is_valid():
+                serializer.save()
+        
+        if spider.name == "h3spell":
+            if "1" in item["level"]:
+                level = 1
+            if "2" in item["level"]:
+                level = 2
+            if "3" in item["level"]:
+                level = 3
+            if "4" in item["level"]:
+                level = 4
+            if "5" in item["level"]:
+                level = 5
+
+            magic_school = item["magic_school"].split()[0]
+            if magic_school == "Fire":
+                school = 0
+            if magic_school == "Air":
+                school = 1
+            if magic_school == "Earth":
+                school = 2
+            if magic_school == "Water":
+                school = 3
+
+            serializer = SpellSerializer(
+                data={
+                    "name": item["name"],
+                    "level": level,
+                    "magic_school": school,
+                    "description_base": item["description_base"],
+                    "description_advance": item["description_advance"],
+                    "description_expert": item["description_expert"],
                     "picture_url": File(open(os.path.join(IMAGES_STORE, item["images"][0]["path"]), "rb"))
                 }
             )

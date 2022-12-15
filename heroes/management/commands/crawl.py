@@ -4,7 +4,8 @@ from scrapy.utils.project import get_project_settings
 
 from heroes_scraper.spiders.heroes_spyder import(
     TownScraper,
-    CreatureScraper
+    CreatureScraper,
+    SpellScraper
 )
 
 
@@ -16,4 +17,5 @@ class Command(BaseCommand):
 
         process.crawl(TownScraper)
         process.crawl(CreatureScraper)
+        process.crawl(SpellScraper)
         process.start()
