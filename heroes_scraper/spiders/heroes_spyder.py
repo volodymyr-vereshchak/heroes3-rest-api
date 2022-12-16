@@ -5,7 +5,8 @@ from urllib.parse import urljoin
 from heroes_scraper.items import (
     TownItem,
     CreatureItem,
-    SpellItem
+    SpellItem,
+    SecondarySkillItem
 )
 
 
@@ -13,6 +14,7 @@ BASE_URL = "https://heroes.thelazy.net/"
 TOWN_URL = urljoin(BASE_URL, "index.php/Main_Page")
 CREATURE_URL = urljoin(BASE_URL, "index.php/List_of_creatures")
 SPELL_URL = urljoin(BASE_URL, "index.php/List_of_spells")
+SECONDARY_SKILL_URL = urljoin(BASE_URL, "index.php/Secondary_skill")
 
 
 class TownScraper(scrapy.Spider):
@@ -74,4 +76,49 @@ class SpellScraper(scrapy.Spider):
             yield scrapy.Request(
                 url=urljoin(BASE_URL, spell_url),
                 callback=self.parse_detail
+            )
+
+
+class SecondarySkillScraper(scrapy.Spider):
+    name = "h3SecondarySkill"
+    start_urls = [SECONDARY_SKILL_URL]
+    
+    def parse_skill_detail(self, response):
+        item_list = []
+        item = SecondarySkillItem()
+        item["name"] = response.css("tbody > tr:nth-child(1) > td > b::text").get()
+        item["level"] = 0
+        item["description"] = response.css("tbody > tr:nth-child(2) > td:nth-child(2)::text").get().strip()
+        item["picture_url"] = [
+            urljoin(BASE_URL, response.css("tbody > tr:nth-child(2) > td:nth-child(1) > a > img::attr(src)").get())
+        ]
+        item_list.append(item)
+
+        item = SecondarySkillItem()
+        item["name"] = response.css("tbody > tr:nth-child(1) > td > b::text").get()
+        item["level"] = 1
+        item["description"] = response.css("tbody > tr:nth-child(3) > td:nth-child(2)::text").get().strip()
+        item["picture_url"] = [
+            urljoin(BASE_URL, response.css("tbody > tr:nth-child(3) > td:nth-child(1) > a > img::attr(src)").get())
+        ]
+        item_list.append(item)
+
+        item = SecondarySkillItem()
+        item["name"] = response.css("tbody > tr:nth-child(1) > td > b::text").get()
+        item["level"] = 2
+        item["description"] = response.css("tbody > tr:nth-child(4) > td:nth-child(2)::text").get().strip()
+        item["picture_url"] = [
+            urljoin(BASE_URL, response.css("tbody > tr:nth-child(4) > td:nth-child(1) > a > img::attr(src)").get())
+        ]
+        item_list.append(item)
+
+        for item in item_list:
+            yield item
+
+    
+    def parse(self, response, **kwargs):
+        for skill in response.css("tbody tr")[1:]:
+            yield scrapy.Request(
+                urljoin(BASE_URL, skill.css("td > a::attr(href)").get()),
+                self.parse_skill_detail
             )

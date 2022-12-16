@@ -44,10 +44,8 @@ class SecondarySkillSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "level",
-            "description_base",
-            "description_advance",
-            "description_expert",
-            "picture_url"
+            "description",
+            "picture_url",
         )
 
 

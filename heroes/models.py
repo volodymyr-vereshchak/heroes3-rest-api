@@ -46,11 +46,9 @@ class SecondarySkill(models.Model):
         ADVANCED = 1
         EXPERT = 2
 
-    name = models.CharField(max_length=32, unique=True)
-    level = models.PositiveIntegerField(choices=Level.choices)
-    description_base = models.TextField(null=True)
-    description_advance = models.TextField(null=True)
-    description_expert = models.TextField(null=True)
+    name = models.CharField(max_length=32)
+    level = models.PositiveIntegerField(choices=Level.choices, null=True)
+    description = models.TextField(null=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
 
 

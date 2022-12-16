@@ -13,7 +13,8 @@ from heroes_scraper.settings import IMAGES_STORE
 from heroes.serializers import (
     TownSerializer,
     CreatureSerializer,
-    SpellSerializer
+    SpellSerializer,
+    SecondarySkillSerializer
 )
 from heroes.models import (
     Town
@@ -25,9 +26,7 @@ class HeroesScraperPipeline:
     def process_item(self, item, spider):
         if spider.name == "h3town":
             serializer = TownSerializer(data={"name": item["name"], "picture_url": File(open(os.path.join(IMAGES_STORE, item["images"][0]["path"]), "rb"))})
-            if serializer.is_valid():
-                serializer.save()
-        
+
         if spider.name == "h3creature":
             try:
                 town = Town.objects.get(name=item["town"])
@@ -51,9 +50,7 @@ class HeroesScraperPipeline:
                     "picture_url": File(open(os.path.join(IMAGES_STORE, item["images"][0]["path"]), "rb"))
                 }
             )
-            if serializer.is_valid():
-                serializer.save()
-        
+
         if spider.name == "h3spell":
             if "1" in item["level"]:
                 level = 1
@@ -87,6 +84,18 @@ class HeroesScraperPipeline:
                     "picture_url": File(open(os.path.join(IMAGES_STORE, item["images"][0]["path"]), "rb"))
                 }
             )
-            if serializer.is_valid():
-                serializer.save()
+
+        if spider.name == "h3SecondarySkill":
+            serializer = SecondarySkillSerializer(
+                data={
+                    "name": item["name"],
+                    "level": item["level"],
+                    "description": item["description"],
+                    "picture_url": File(open(os.path.join(IMAGES_STORE, item["images"][0]["path"]), "rb")) 
+                }
+            )
+
+        if serializer.is_valid():
+            serializer.save()
+
         return item

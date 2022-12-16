@@ -9,7 +9,8 @@ from scrapy_djangoitem import DjangoItem
 from heroes.models import (
     Town,
     Creature,
-    Spell
+    Spell,
+    SecondarySkill
 )
 
 
@@ -26,3 +27,8 @@ class CreatureItem(DjangoItem):
 class SpellItem(DjangoItem):
     images = scrapy.Field()
     django_model = Spell
+
+
+class SecondarySkillItem(DjangoItem):
+    images = scrapy.Field()
+    django_model = SecondarySkill
