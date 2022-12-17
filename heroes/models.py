@@ -25,19 +25,15 @@ class Town(models.Model):
         return f"Town: {self.name}"
 
 
-class Skill(models.Model):
-    attack = models.PositiveIntegerField()
-    defense = models.PositiveIntegerField()
-    power = models.PositiveIntegerField()
-    knowledge = models.PositiveIntegerField()
+class Class(models.Model):
+    name = models.CharField(max_length=16, unique=True)
+    attack = models.PositiveIntegerField(null=True)
+    defense = models.PositiveIntegerField(null=True)
+    power = models.PositiveIntegerField(null=True)
+    knowledge = models.PositiveIntegerField(null=True)
 
     def __str__(self) -> str:
         return f"Attack: {self.attack} Defense: {self.defense} Power: {self.power} Knowledge: {self.knowledge}"
-
-
-class Class(models.Model):
-    name = models.CharField(max_length=16)
-    skills = models.ForeignKey(Skill, on_delete=models.CASCADE)
     
 
 class SecondarySkill(models.Model):
@@ -50,6 +46,9 @@ class SecondarySkill(models.Model):
     level = models.PositiveIntegerField(choices=Level.choices, null=True)
     description = models.TextField(null=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
+    
+    class Meta:
+        unique_together = ["name", "level"]
 
 
 class Spell(models.Model):

@@ -4,7 +4,6 @@ from rest_framework import routers
 from heroes.views import (
     ResorceView,
     TownView,
-    SkillView,
     ClassView,
     SecondarySkillView,
     SpellView,
@@ -16,7 +15,6 @@ from heroes.views import (
 router = routers.DefaultRouter()
 router.register("resources", ResorceView)
 router.register("towns", TownView)
-router.register("skills", SkillView)
 router.register("classes", ClassView)
 router.register("secondary-skills", SecondarySkillView)
 router.register("spells", SpellView)

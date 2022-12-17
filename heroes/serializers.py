@@ -3,7 +3,6 @@ from rest_framework import serializers
 from heroes.models import (
     Resource,
     Town,
-    Skill,
     Class,
     SecondarySkill,
     Spell,
@@ -24,17 +23,17 @@ class TownSerializer(serializers.ModelSerializer):
         model = Town
         fields = ("id", "name", "picture_url")
 
-
-class SkillSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Skill
-        fields = ("id", "attack", "defense", "power", "knowledge")
-
-
 class ClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Class
-        fields = ("id", "name", "skills")
+        fields = (
+            "id", 
+            "name", 
+            "attack",
+            "defense",
+            "power",
+            "knowledge"
+        )
 
 
 class SecondarySkillSerializer(serializers.ModelSerializer):

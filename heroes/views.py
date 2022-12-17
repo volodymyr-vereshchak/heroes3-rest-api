@@ -4,7 +4,6 @@ from rest_framework.viewsets import ModelViewSet
 from heroes.serializers import (
     ResourceSerializer,
     TownSerializer,
-    SkillSerializer,
     ClassSerializer,
     SecondarySkillSerializer,
     SpellSerializer,
@@ -15,7 +14,6 @@ from heroes.serializers import (
 from heroes.models import (
     Resource,
     Town,
-    Skill,
     Class,
     SecondarySkill,
     Spell,
@@ -33,11 +31,6 @@ class ResorceView(ModelViewSet):
 class TownView(ModelViewSet):
     queryset = Town.objects.all()
     serializer_class = TownSerializer
-
-
-class SkillView(ModelViewSet):
-    queryset = Skill.objects.all()
-    serializer_class = SkillSerializer
 
 
 class ClassView(ModelViewSet):

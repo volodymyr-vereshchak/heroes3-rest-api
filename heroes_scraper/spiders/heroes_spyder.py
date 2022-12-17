@@ -6,7 +6,8 @@ from heroes_scraper.items import (
     TownItem,
     CreatureItem,
     SpellItem,
-    SecondarySkillItem
+    SecondarySkillItem,
+    HeroClassItem
 )
 
 
@@ -15,6 +16,7 @@ TOWN_URL = urljoin(BASE_URL, "index.php/Main_Page")
 CREATURE_URL = urljoin(BASE_URL, "index.php/List_of_creatures")
 SPELL_URL = urljoin(BASE_URL, "index.php/List_of_spells")
 SECONDARY_SKILL_URL = urljoin(BASE_URL, "index.php/Secondary_skill")
+CLASS_URL = urljoin(BASE_URL, "index.php/Hero_class")
 
 
 class TownScraper(scrapy.Spider):
@@ -122,3 +124,18 @@ class SecondarySkillScraper(scrapy.Spider):
                 urljoin(BASE_URL, skill.css("td > a::attr(href)").get()),
                 self.parse_skill_detail
             )
+
+
+class ClassScraper(scrapy.Spider):
+    name = "h3class"
+    start_urls = [CLASS_URL]
+    
+    def parse(self, response, **kwargs):        
+        for hero_class in response.css("table:nth-child(6) tbody tr"):
+            item = HeroClassItem()
+            item["name"] = hero_class.css("td:nth-child(1) > a::attr(title)").get()
+            item["attack"] = hero_class.css("td:nth-child(3)::text").get()
+            item["defense"] = hero_class.css("td:nth-child(4)::text").get()
+            item["power"] = hero_class.css("td:nth-child(5)::text").get()
+            item["knowledge"] = hero_class.css("td:nth-child(6)::text").get()
+            yield item
