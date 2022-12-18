@@ -15,7 +15,8 @@ from heroes.serializers import (
     CreatureSerializer,
     SpellSerializer,
     SecondarySkillSerializer,
-    ClassSerializer
+    ClassSerializer,
+    ResourceSerializer
 )
 from heroes.models import (
     Town
@@ -104,6 +105,14 @@ class HeroesScraperPipeline:
                     "defense": item["defense"],
                     "power": item["power"],
                     "knowledge": item["knowledge"]
+                }
+            )
+        
+        if spider.name == "h3resource":
+            serializer = ResourceSerializer(
+                data={
+                    "name": item["name"],
+                    "picture_url": File(open(os.path.join(IMAGES_STORE, item["images"][0]["path"]), "rb"))
                 }
             )
 

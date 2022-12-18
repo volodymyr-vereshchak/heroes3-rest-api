@@ -7,7 +7,8 @@ from heroes_scraper.spiders.heroes_spyder import(
     CreatureScraper,
     SpellScraper,
     SecondarySkillScraper,
-    ClassScraper
+    ClassScraper,
+    ResourceScraper
 )
 
 
@@ -22,4 +23,5 @@ class Command(BaseCommand):
         process.crawl(SpellScraper)
         process.crawl(SecondarySkillScraper)
         process.crawl(ClassScraper)
+        process.crawl(ResourceScraper)
         process.start()

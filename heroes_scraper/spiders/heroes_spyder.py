@@ -7,7 +7,8 @@ from heroes_scraper.items import (
     CreatureItem,
     SpellItem,
     SecondarySkillItem,
-    HeroClassItem
+    HeroClassItem,
+    ResourceItem
 )
 
 
@@ -17,6 +18,8 @@ CREATURE_URL = urljoin(BASE_URL, "index.php/List_of_creatures")
 SPELL_URL = urljoin(BASE_URL, "index.php/List_of_spells")
 SECONDARY_SKILL_URL = urljoin(BASE_URL, "index.php/Secondary_skill")
 CLASS_URL = urljoin(BASE_URL, "index.php/Hero_class")
+HERO_URL = urljoin(BASE_URL, "index.php/List_of_heroes")
+RESOURCE_URL = urljoin(BASE_URL, "index.php/Resource")
 
 
 class TownScraper(scrapy.Spider):
@@ -139,3 +142,25 @@ class ClassScraper(scrapy.Spider):
             item["power"] = hero_class.css("td:nth-child(5)::text").get()
             item["knowledge"] = hero_class.css("td:nth-child(6)::text").get()
             yield item
+
+
+class ResourceScraper(scrapy.Spider):
+    name = "h3resource"
+    start_urls = [RESOURCE_URL]
+    
+    def parse(self, response, **kwargs):
+        resources = response.css(".toclevel-1 .toctext::text").getall()
+        resources_img = response.css("[alt*=Resource]::attr(src)").getall()
+        for idx in range(len(resources)):
+            item = ResourceItem()
+            item["name"] = resources[idx]
+            item["picture_url"] = [urljoin(BASE_URL, resources_img[idx])]
+            yield item
+
+
+class HeroScraper(scrapy.Spider):
+    name = "h3hero"
+    start_urls = [HERO_URL]
+    
+    def parse(self, response, **kwargs):
+        return super().parse(response, **kwargs)

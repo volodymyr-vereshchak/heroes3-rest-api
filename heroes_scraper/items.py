@@ -11,7 +11,9 @@ from heroes.models import (
     Creature,
     Spell,
     SecondarySkill,
-    Class
+    Class,
+    Resource,
+    Hero
 )
 
 
@@ -37,3 +39,8 @@ class SecondarySkillItem(DjangoItem):
 
 class HeroClassItem(DjangoItem):
     django_model = Class
+
+
+class ResourceItem(DjangoItem):
+    images = scrapy.Field()
+    django_model = Resource
