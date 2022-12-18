@@ -8,9 +8,12 @@ from heroes.serializers import (
     SecondarySkillSerializer,
     SpellSerializer,
     CreatureSerializer,
+    SpecialtySerializer,
+    SpecialtyListSerializer,
+    SpecialtyDetailSerializer,
     HeroSerializer,
     HeroListSerializer,
-    SpeciltyListSerializer
+    HeroDetailSerializer,
 )
 from heroes.models import (
     Resource,
@@ -56,7 +59,13 @@ class CreatureView(ModelViewSet):
 
 class SpecialtyView(ModelViewSet):
     queryset = Specialty.objects.all()
-    serializer_class = SpeciltyListSerializer
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return SpecialtyListSerializer
+        if self.action == "retrieve":
+            return SpecialtyDetailSerializer
+        return SpecialtySerializer
 
 
 class HeroView(ModelViewSet):
@@ -65,4 +74,6 @@ class HeroView(ModelViewSet):
     def get_serializer_class(self):
         if self.action == "list":
             return HeroListSerializer
+        if self.action == "retrieve":
+            return HeroDetailSerializer
         return HeroSerializer

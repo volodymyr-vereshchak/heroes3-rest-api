@@ -33,7 +33,7 @@ class Class(models.Model):
     knowledge = models.PositiveIntegerField(null=True)
 
     def __str__(self) -> str:
-        return f"Attack: {self.attack} Defense: {self.defense} Power: {self.power} Knowledge: {self.knowledge}"
+        return f"{self.name} Attack: {self.attack} Defense: {self.defense} Power: {self.power} Knowledge: {self.knowledge}"
     
 
 class SecondarySkill(models.Model):
@@ -49,6 +49,9 @@ class SecondarySkill(models.Model):
     
     class Meta:
         unique_together = ["name", "level"]
+    
+    def __str__(self) -> str:
+        return f"{self.name} level: {self.level}"
 
 
 class Spell(models.Model):
@@ -65,6 +68,9 @@ class Spell(models.Model):
     description_advance = models.TextField(null=True)
     description_expert = models.TextField(null=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
+    
+    def __str__(self) -> str:
+        return f"{self.name}"
 
 
 class Creature(models.Model):
@@ -82,6 +88,9 @@ class Creature(models.Model):
     ai_value = models.PositiveIntegerField()
     gold = models.PositiveSmallIntegerField()
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
+    
+    def __str__(self) -> str:
+        return f"{self.name}"
 
 
 class Specialty(models.Model):
@@ -89,6 +98,16 @@ class Specialty(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE, null=True, blank=True)
     spell = models.ForeignKey(Spell, on_delete=models.CASCADE, null=True, blank=True)
     secondary_skill = models.ForeignKey(SecondarySkill, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self) -> str:
+        if self.creature:
+            return f"{self.creature.name}"
+        if self.resource:
+            return f"{self.resource.name}"
+        if self.spell:
+            return f"{self.spell.name}"
+        if self.secondary_skill:
+            return f"{self.secondary_skill.name}"
 
 
 class Hero(models.Model):

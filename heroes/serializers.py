@@ -89,13 +89,24 @@ class SpecialtySerializer(serializers.ModelSerializer):
     class Meta:
         model = Specialty
         fields = ("id", "creature", "resource", "spell", "secondary_skill")
+    
+    def to_representation(self, instance):
+        result = super(SpecialtySerializer, self).to_representation(instance)
+        return {key: value for key, value in result.items() if value is not None}
 
 
-class SpeciltyListSerializer(SpecialtySerializer):
+class SpecialtyListSerializer(SpecialtySerializer):
     creature = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
     resource = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
     spell = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
     secondary_skill = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+
+
+class SpecialtyDetailSerializer(SpecialtySerializer):
+    creature = CreatureSerializer(many=False, read_only=True)
+    resource = ResourceSerializer(many=False, read_only=True)
+    spell = SpellSerializer(many=False, read_only=True)
+    secondary_skill = SecondarySkillSerializer(many=False, read_only=True)
 
 
 class HeroSerializer(serializers.ModelSerializer):
@@ -111,11 +122,23 @@ class HeroSerializer(serializers.ModelSerializer):
             "spell",
             "picture_url"
         )
+    
+    def to_representation(self, instance):
+        result = super(HeroSerializer, self).to_representation(instance)
+        return {key: value for key, value in result.items() if value is not None}
 
 
 class HeroListSerializer(HeroSerializer):
     hero_class = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
-    specialty = SpeciltyListSerializer(many=False, read_only=True)
+    specialty = SpecialtyListSerializer(many=False, read_only=True)
     secondary_skill_first = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
     secondary_skill_second = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
     spell = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+
+
+class HeroDetailSerializer(HeroSerializer):
+    hero_class = ClassSerializer(many=False, read_only=True)
+    specialty = SpecialtyDetailSerializer(many=False, read_only=True)
+    secondary_skill_first = SecondarySkillSerializer(many=False, read_only=True)
+    secondary_skill_second = SecondarySkillSerializer(many=False, read_only=True)
+    spell = SpellSerializer(many=False, read_only=True)
