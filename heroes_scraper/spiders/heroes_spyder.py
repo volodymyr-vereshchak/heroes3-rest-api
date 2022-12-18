@@ -172,7 +172,7 @@ class HeroScraper(scrapy.Spider):
             item["specialty"] = hero_url.css("td:nth-child(4) > a::attr(title)").get()
             item["secondary_skill_first"] = hero_url.css("td:nth-child(6) > a::attr(title)").get()
             item["secondary_skill_second"] = hero_url.css("td:nth-child(8) > a::attr(title)").get()
-            item["spell"] = hero_url.css("td:nth-child(10) > a:nth-child(2)::attr(title)").get()
+            item["spell"] = hero_url.css("td:nth-child(10) > a:nth-child(2)::text").get()
             item["picture_url"] = [
                 urljoin(
                     BASE_URL,

@@ -13,7 +13,7 @@ def image_file_path(instance, filename):
 
 
 class Resource(models.Model):
-    name = models.CharField(max_length=16)
+    name = models.CharField(max_length=16, unique=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
 
 

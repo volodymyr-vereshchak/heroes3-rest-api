@@ -136,7 +136,7 @@ class HeroesScraperPipeline:
         
         if spider.name == "h3hero":
             hero_class = Class.objects.get(name=item["hero_class"])
-            creature = Creature.objects.filter(name=item["specialty"])
+            creature = Creature.objects.filter(name__icontains=item["specialty"][:-1])
             resource = Resource.objects.filter(name=item["specialty"])
             spell = Spell.objects.filter(name=item["specialty"])
             secondary_skill = SecondarySkill.objects.filter(name=item["specialty"])
@@ -153,7 +153,7 @@ class HeroesScraperPipeline:
             secondary_skill_first = SecondarySkill.objects.get(name=first_skill, level=first_skill_level)
             second_skill_level, second_skill = item["secondary_skill_second"].split(" ", 1) if item["secondary_skill_second"] else (None, None)
             second_skill_level = self.get_skill_level(second_skill_level)
-            secondary_skill_second = SecondarySkill.objects.get(name=second_skill, level=second_skill_level)
+            secondary_skill_second = SecondarySkill.objects.get(name=second_skill, level=second_skill_level).id if second_skill else None
             spell_hero = Spell.objects.get(name=item["spell"]).id if item["spell"] else None
             
             serializer = HeroSerializer(
@@ -162,7 +162,7 @@ class HeroesScraperPipeline:
                     "hero_class": hero_class.id,
                     "specialty": specialty[0].id,
                     "secondary_skill_first": secondary_skill_first.id,
-                    "secondary_skill_second": secondary_skill_second.id,
+                    "secondary_skill_second": secondary_skill_second,
                     "spell": spell_hero,
                     "picture_url": File(open(os.path.join(IMAGES_STORE, item["images"][0]["path"]), "rb"))
                 }
