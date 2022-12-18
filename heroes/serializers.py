@@ -91,6 +91,13 @@ class SpecialtySerializer(serializers.ModelSerializer):
         fields = ("id", "creature", "resource", "spell", "secondary_skill")
 
 
+class SpeciltyListSerializer(SpecialtySerializer):
+    creature = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+    resource = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+    spell = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+    secondary_skill = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+
+
 class HeroSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hero
@@ -104,3 +111,11 @@ class HeroSerializer(serializers.ModelSerializer):
             "spell",
             "picture_url"
         )
+
+
+class HeroListSerializer(HeroSerializer):
+    hero_class = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+    specialty = SpeciltyListSerializer(many=False, read_only=True)
+    secondary_skill_first = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+    secondary_skill_second = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+    spell = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
