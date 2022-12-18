@@ -44,3 +44,9 @@ class HeroClassItem(DjangoItem):
 class ResourceItem(DjangoItem):
     images = scrapy.Field()
     django_model = Resource
+
+
+class HeroItem(DjangoItem):
+    images = scrapy.Field()
+    description = scrapy.Field()
+    django_model = Hero

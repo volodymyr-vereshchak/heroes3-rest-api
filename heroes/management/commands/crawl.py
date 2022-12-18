@@ -8,7 +8,7 @@ from heroes_scraper.spiders.heroes_spyder import(
     SpellScraper,
     SecondarySkillScraper,
     ClassScraper,
-    ResourceScraper
+    ResourceScraper,HeroScraper
 )
 
 
@@ -18,10 +18,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         process = CrawlerProcess(get_project_settings())
 
-        process.crawl(TownScraper)
-        process.crawl(CreatureScraper)
-        process.crawl(SpellScraper)
-        process.crawl(SecondarySkillScraper)
-        process.crawl(ClassScraper)
-        process.crawl(ResourceScraper)
+        # process.crawl(TownScraper)
+        # process.crawl(CreatureScraper)
+        # process.crawl(SpellScraper)
+        # process.crawl(SecondarySkillScraper)
+        # process.crawl(ClassScraper)
+        # process.crawl(ResourceScraper)
+        process.crawl(HeroScraper)
         process.start()

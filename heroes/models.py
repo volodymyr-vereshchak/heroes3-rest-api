@@ -85,17 +85,17 @@ class Creature(models.Model):
 
 
 class Specialty(models.Model):
-    creature = models.ForeignKey(Creature, on_delete=models.CASCADE, unique=True, null=True)
-    resource = models.ForeignKey(Resource, on_delete=models.CASCADE, unique=True, null=True)
-    spell = models.ForeignKey(Spell, on_delete=models.CASCADE, unique=True, null=True)
-    secondary_skill = models.ForeignKey(SecondarySkill, on_delete=models.CASCADE, unique=True, null=True)
+    creature = models.ForeignKey(Creature, on_delete=models.CASCADE, null=True, blank=True)
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE, null=True, blank=True)
+    spell = models.ForeignKey(Spell, on_delete=models.CASCADE, null=True, blank=True)
+    secondary_skill = models.ForeignKey(SecondarySkill, on_delete=models.CASCADE, null=True, blank=True)
 
 
 class Hero(models.Model):
-    name = models.CharField(max_length=16)
+    name = models.CharField(max_length=16, unique=True)
     hero_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE)
     secondary_skill_first = models.ForeignKey(SecondarySkill, related_name="first_skill", on_delete=models.CASCADE)
-    secondary_skill_second = models.ForeignKey(SecondarySkill, related_name="second_skill", on_delete=models.CASCADE)
-    spell = models.ForeignKey(Spell, on_delete=models.CASCADE)
+    secondary_skill_second = models.ForeignKey(SecondarySkill, related_name="second_skill", on_delete=models.CASCADE, null=True)
+    spell = models.ForeignKey(Spell, on_delete=models.CASCADE, null=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)

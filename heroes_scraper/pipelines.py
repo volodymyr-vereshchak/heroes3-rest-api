@@ -16,14 +16,28 @@ from heroes.serializers import (
     SpellSerializer,
     SecondarySkillSerializer,
     ClassSerializer,
-    ResourceSerializer
+    ResourceSerializer,
+    HeroSerializer
 )
 from heroes.models import (
-    Town
+    Town,
+    Class,
+    Creature,
+    Resource,
+    Spell,
+    SecondarySkill,
+    Specialty
 )
 
 
 class HeroesScraperPipeline:
+    @staticmethod
+    def get_skill_level(skill_level: str) -> int:
+        if skill_level == "Basic":
+            return 0
+        if skill_level == "Advanced":
+            return 1
+    
     @sync_to_async
     def process_item(self, item, spider):
         if spider.name == "h3town":
@@ -65,15 +79,19 @@ class HeroesScraperPipeline:
             if "5" in item["level"]:
                 level = 5
 
-            magic_school = item["magic_school"].split()[0]
-            if magic_school == "Fire":
-                school = 0
-            if magic_school == "Air":
-                school = 1
-            if magic_school == "Earth":
-                school = 2
-            if magic_school == "Water":
-                school = 3
+            magic_school = item["magic_school"]
+            if magic_school is not None:
+                magic_school = magic_school.split()[0]
+                if magic_school == "Fire":
+                    school = 0
+                if magic_school == "Air":
+                    school = 1
+                if magic_school == "Earth":
+                    school = 2
+                if magic_school == "Water":
+                    school = 3
+            else:
+                school = None
 
             serializer = SpellSerializer(
                 data={
@@ -112,6 +130,40 @@ class HeroesScraperPipeline:
             serializer = ResourceSerializer(
                 data={
                     "name": item["name"],
+                    "picture_url": File(open(os.path.join(IMAGES_STORE, item["images"][0]["path"]), "rb"))
+                }
+            )
+        
+        if spider.name == "h3hero":
+            hero_class = Class.objects.get(name=item["hero_class"])
+            creature = Creature.objects.filter(name=item["specialty"])
+            resource = Resource.objects.filter(name=item["specialty"])
+            spell = Spell.objects.filter(name=item["specialty"])
+            secondary_skill = SecondarySkill.objects.filter(name=item["specialty"])
+            if creature:
+                specialty = Specialty.objects.get_or_create(creature=creature[0])
+            if resource:
+                specialty = Specialty.objects.get_or_create(resource=resource[0])
+            if spell:
+                specialty = Specialty.objects.get_or_create(spell=spell[0])
+            if secondary_skill:
+                specialty = Specialty.objects.get_or_create(secondary_skill=secondary_skill[0])
+            first_skill_level, first_skill = item["secondary_skill_first"].split(" ", 1)
+            first_skill_level = self.get_skill_level(first_skill_level)
+            secondary_skill_first = SecondarySkill.objects.get(name=first_skill, level=first_skill_level)
+            second_skill_level, second_skill = item["secondary_skill_second"].split(" ", 1) if item["secondary_skill_second"] else (None, None)
+            second_skill_level = self.get_skill_level(second_skill_level)
+            secondary_skill_second = SecondarySkill.objects.get(name=second_skill, level=second_skill_level)
+            spell_hero = Spell.objects.get(name=item["spell"]).id if item["spell"] else None
+            
+            serializer = HeroSerializer(
+                data={
+                    "name": item["name"],
+                    "hero_class": hero_class.id,
+                    "specialty": specialty[0].id,
+                    "secondary_skill_first": secondary_skill_first.id,
+                    "secondary_skill_second": secondary_skill_second.id,
+                    "spell": spell_hero,
                     "picture_url": File(open(os.path.join(IMAGES_STORE, item["images"][0]["path"]), "rb"))
                 }
             )

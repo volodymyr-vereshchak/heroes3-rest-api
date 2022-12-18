@@ -8,7 +8,8 @@ from heroes_scraper.items import (
     SpellItem,
     SecondarySkillItem,
     HeroClassItem,
-    ResourceItem
+    ResourceItem,
+    HeroItem
 )
 
 
@@ -161,6 +162,21 @@ class ResourceScraper(scrapy.Spider):
 class HeroScraper(scrapy.Spider):
     name = "h3hero"
     start_urls = [HERO_URL]
-    
+
     def parse(self, response, **kwargs):
-        return super().parse(response, **kwargs)
+        heroes = response.css("tbody tr")
+        for hero_url in heroes[1:]:
+            item = HeroItem()
+            item["name"] = hero_url.css("td:nth-child(1) > a:nth-child(2)::attr(title)").get()
+            item["hero_class"] = hero_url.css("td:nth-child(2) > a::attr(title)").get()
+            item["specialty"] = hero_url.css("td:nth-child(4) > a::attr(title)").get()
+            item["secondary_skill_first"] = hero_url.css("td:nth-child(6) > a::attr(title)").get()
+            item["secondary_skill_second"] = hero_url.css("td:nth-child(8) > a::attr(title)").get()
+            item["spell"] = hero_url.css("td:nth-child(10) > a:nth-child(2)::attr(title)").get()
+            item["picture_url"] = [
+                urljoin(
+                    BASE_URL,
+                    hero_url.css("td:nth-child(1) > a:nth-child(1) > img::attr(src)").get()
+                )
+            ]
+            yield item
