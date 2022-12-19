@@ -3,13 +3,14 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 from twisted.internet import defer
 
-from heroes_scraper.spiders.heroes_spyder import(
+from heroes_scraper.spiders.heroes_spyder import (
     TownScraper,
     CreatureScraper,
     SpellScraper,
     SecondarySkillScraper,
     ClassScraper,
-    ResourceScraper,HeroScraper
+    ResourceScraper,
+    HeroScraper,
 )
 
 
@@ -28,5 +29,6 @@ class Command(BaseCommand):
             yield process.crawl(ClassScraper)
             yield process.crawl(ResourceScraper)
             yield process.crawl(HeroScraper)
+
         crawl(process)
         process.start()

@@ -6,15 +6,7 @@
 import scrapy
 from scrapy_djangoitem import DjangoItem
 
-from heroes.models import (
-    Town,
-    Creature,
-    Spell,
-    SecondarySkill,
-    Class,
-    Resource,
-    Hero
-)
+from heroes.models import Town, Creature, Spell, SecondarySkill, Class, Resource, Hero
 
 
 class TownItem(DjangoItem):

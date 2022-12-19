@@ -23,7 +23,7 @@ from heroes.models import (
     Spell,
     Creature,
     Specialty,
-    Hero
+    Hero,
 )
 
 

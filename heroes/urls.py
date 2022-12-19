@@ -9,7 +9,7 @@ from heroes.views import (
     SpellView,
     CreatureView,
     SpecialtyView,
-    HeroView
+    HeroView,
 )
 
 router = routers.DefaultRouter()

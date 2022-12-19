@@ -34,7 +34,7 @@ class Class(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name} Attack: {self.attack} Defense: {self.defense} Power: {self.power} Knowledge: {self.knowledge}"
-    
+
 
 class SecondarySkill(models.Model):
     class Level(models.IntegerChoices):
@@ -46,10 +46,10 @@ class SecondarySkill(models.Model):
     level = models.PositiveIntegerField(choices=Level.choices, null=True)
     description = models.TextField(null=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
-    
+
     class Meta:
         unique_together = ["name", "level"]
-    
+
     def __str__(self) -> str:
         return f"{self.name} level: {self.level}"
 
@@ -68,7 +68,7 @@ class Spell(models.Model):
     description_advance = models.TextField(null=True)
     description_expert = models.TextField(null=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
-    
+
     def __str__(self) -> str:
         return f"{self.name}"
 
@@ -88,16 +88,22 @@ class Creature(models.Model):
     ai_value = models.PositiveIntegerField()
     gold = models.PositiveSmallIntegerField()
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
-    
+
     def __str__(self) -> str:
         return f"{self.name}"
 
 
 class Specialty(models.Model):
-    creature = models.ForeignKey(Creature, on_delete=models.CASCADE, null=True, blank=True)
-    resource = models.ForeignKey(Resource, on_delete=models.CASCADE, null=True, blank=True)
+    creature = models.ForeignKey(
+        Creature, on_delete=models.CASCADE, null=True, blank=True
+    )
+    resource = models.ForeignKey(
+        Resource, on_delete=models.CASCADE, null=True, blank=True
+    )
     spell = models.ForeignKey(Spell, on_delete=models.CASCADE, null=True, blank=True)
-    secondary_skill = models.ForeignKey(SecondarySkill, on_delete=models.CASCADE, null=True, blank=True)
+    secondary_skill = models.ForeignKey(
+        SecondarySkill, on_delete=models.CASCADE, null=True, blank=True
+    )
 
     def __str__(self) -> str:
         if self.creature:
@@ -114,7 +120,11 @@ class Hero(models.Model):
     name = models.CharField(max_length=16, unique=True)
     hero_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE)
-    secondary_skill_first = models.ForeignKey(SecondarySkill, related_name="first_skill", on_delete=models.CASCADE)
-    secondary_skill_second = models.ForeignKey(SecondarySkill, related_name="second_skill", on_delete=models.CASCADE, null=True)
+    secondary_skill_first = models.ForeignKey(
+        SecondarySkill, related_name="first_skill", on_delete=models.CASCADE
+    )
+    secondary_skill_second = models.ForeignKey(
+        SecondarySkill, related_name="second_skill", on_delete=models.CASCADE, null=True
+    )
     spell = models.ForeignKey(Spell, on_delete=models.CASCADE, null=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
