@@ -6,3 +6,4 @@ db.sqlite3
 .env
 /heroes_scraper/download
 .idea/
+todo
