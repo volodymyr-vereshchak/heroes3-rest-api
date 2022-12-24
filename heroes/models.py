@@ -2,6 +2,7 @@ import os
 import uuid
 
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 
 
@@ -15,6 +16,9 @@ def image_file_path(instance, filename):
 class Resource(models.Model):
     name = models.CharField(max_length=16, unique=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
+    
+    def __str__(self) -> str:
+        return f"{self.name}"
 
 
 class Town(models.Model):
@@ -128,3 +132,31 @@ class Hero(models.Model):
     )
     spell = models.ForeignKey(Spell, on_delete=models.CASCADE, null=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
+    
+    def __str__(self) -> str:
+        return f"{self.hero_class} {self.name}"
+    
+    @staticmethod
+    def validate_skill(
+        hero_class: int, 
+        specialty: Specialty, 
+        secondary_skill_first: int,
+        secondary_skill_second: int
+    ):
+        necromancy = SecondarySkill.objects.filter(name="Necromancy")
+        heroes_necr = Class.objects.filter(name__in=("Death Knight", "Necromancer"))
+        if (
+            Specialty.objects.get(id=specialty.id).secondary_skill in necromancy
+            or secondary_skill_first in necromancy
+            or secondary_skill_second in necromancy
+            and hero_class not in heroes_necr
+        ):
+            raise ValidationError("Only Death Knight and Necromancer can have Necromancy!")
+
+    def clean(self) -> None:
+        return self.validate_skill(
+            self.hero_class,
+            self.specialty,
+            self.secondary_skill_first,
+            self.secondary_skill_second
+        )
