@@ -135,7 +135,9 @@ class HeroListSerializer(HeroSerializer):
     hero_class = serializers.SlugRelatedField(
         many=False, read_only=True, slug_field="name"
     )
-    specialty = SpecialtyListSerializer(many=False, read_only=True)
+    specialty = serializers.SlugRelatedField(
+        many=False, read_only=True, slug_field="name"
+    )
     secondary_skill_first = serializers.SlugRelatedField(
         many=False, read_only=True, slug_field="name"
     )

@@ -1,4 +1,5 @@
 import os
+from django.utils._os import safe_join
 from storages.backends.dropbox import DropBoxStorage
 
 from django.core.exceptions import SuspiciousFileOperation

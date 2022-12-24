@@ -12,12 +12,12 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-RUN mkdir -p /vol/cinema_service/media/
+RUN mkdir -p /download/img/full/
 
 RUN adduser --disabled-password --no-create-home hero-user
 
-RUN chown -R hero-user:hero-user /vol/
-RUN chmod -R 755 /vol/heroes3_api/
+RUN chown -R hero-user:hero-user /download/
 
+RUN chmod -R 755 /download/
 
 USER hero-user

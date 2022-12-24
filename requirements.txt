@@ -44,6 +44,7 @@ Pillow==9.3.0
 platformdirs==2.6.0
 ply==3.11
 Protego==0.2.1
+psycopg2-binary==2.9.5
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21
@@ -72,7 +73,6 @@ tomli==2.0.1
 tomlkit==0.11.6
 tqdm==4.64.1
 Twisted==22.10.0
-twisted-iocpsupport==1.0.2
 types-pytz==2022.6.0.1
 types-PyYAML==6.0.12.2
 typing_extensions==4.4.0
