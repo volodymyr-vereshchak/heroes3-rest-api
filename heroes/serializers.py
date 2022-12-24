@@ -119,14 +119,14 @@ class HeroSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         result = super(HeroSerializer, self).to_representation(instance)
         return {key: value for key, value in result.items() if value is not None}
-    
+
     def validate(self, attrs):
         data = super(HeroSerializer, self).validate(attrs=attrs)
         Hero.validate_skill(
             attrs["hero_class"],
             attrs["specialty"],
             attrs["secondary_skill_first"],
-            attrs["secondary_skill_second"]
+            attrs["secondary_skill_second"],
         )
         return data
 

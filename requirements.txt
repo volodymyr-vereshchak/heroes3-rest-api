@@ -13,10 +13,12 @@ cryptography==38.0.4
 cssselect==1.2.0
 dill==0.3.6
 Django==4.1.4
+django-filter==22.1
 django-storages==1.13.1
 django-stubs==1.13.1
 django-stubs-ext==0.7.0
 djangorestframework==3.14.0
+djangorestframework-simplejwt==5.2.2
 drf-spectacular==0.25.1
 dropbox==11.36.0
 filelock==3.8.2
@@ -46,6 +48,7 @@ pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21
 PyDispatcher==2.0.6
+PyJWT==2.6.0
 pylint==2.15.8
 pylint-django==2.5.3
 pylint-plugin-utils==0.7

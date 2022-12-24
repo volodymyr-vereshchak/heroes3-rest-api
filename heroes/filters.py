@@ -2,6 +2,7 @@ import django_filters
 
 from .models import Specialty
 
+
 class SpecialtyFilter(django_filters.FilterSet):
     class Meta:
         model = Specialty

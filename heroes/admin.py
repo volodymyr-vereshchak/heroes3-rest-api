@@ -8,7 +8,7 @@ from .models import (
     Spell,
     Creature,
     Specialty,
-    Hero
+    Hero,
 )
 
 admin.site.register(Resource)

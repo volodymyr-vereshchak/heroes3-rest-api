@@ -16,7 +16,7 @@ def image_file_path(instance, filename):
 class Resource(models.Model):
     name = models.CharField(max_length=16, unique=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
-    
+
     def __str__(self) -> str:
         return f"{self.name}"
 
@@ -108,7 +108,7 @@ class Specialty(models.Model):
     secondary_skill = models.ForeignKey(
         SecondarySkill, on_delete=models.CASCADE, null=True, blank=True
     )
-    
+
     @property
     def name(self) -> str:
         if self.creature:
@@ -121,7 +121,7 @@ class Specialty(models.Model):
             return f"{self.secondary_skill.name}"
 
     def __str__(self) -> str:
-            return f"{self.name}"
+        return f"{self.name}"
 
 
 class Hero(models.Model):
@@ -136,16 +136,16 @@ class Hero(models.Model):
     )
     spell = models.ForeignKey(Spell, on_delete=models.CASCADE, null=True)
     picture_url = models.ImageField(upload_to=image_file_path, null=True)
-    
+
     def __str__(self) -> str:
         return f"{self.hero_class} {self.name}"
-    
+
     @staticmethod
     def validate_skill(
-        hero_class: int, 
-        specialty: Specialty, 
+        hero_class: int,
+        specialty: Specialty,
         secondary_skill_first: int,
-        secondary_skill_second: int
+        secondary_skill_second: int,
     ):
         necromancy = SecondarySkill.objects.filter(name="Necromancy")
         heroes_necr = Class.objects.filter(name__in=("Death Knight", "Necromancer"))
@@ -155,12 +155,14 @@ class Hero(models.Model):
             or secondary_skill_second in necromancy
             and hero_class not in heroes_necr
         ):
-            raise ValidationError("Only Death Knight and Necromancer can have Necromancy!")
+            raise ValidationError(
+                "Only Death Knight and Necromancer can have Necromancy!"
+            )
 
     def clean(self) -> None:
         return self.validate_skill(
             self.hero_class,
             self.specialty,
             self.secondary_skill_first,
-            self.secondary_skill_second
+            self.secondary_skill_second,
         )
