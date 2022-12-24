@@ -82,24 +82,17 @@ class CreatureSerializer(serializers.ModelSerializer):
 class SpecialtySerializer(serializers.ModelSerializer):
     class Meta:
         model = Specialty
-        fields = ("id", "creature", "resource", "spell", "secondary_skill")
+        fields = ("id", "creature", "resource", "spell", "secondary_skill", "name")
 
     def to_representation(self, instance):
         result = super(SpecialtySerializer, self).to_representation(instance)
         return {key: value for key, value in result.items() if value is not None}
 
 
-class SpecialtyListSerializer(SpecialtySerializer):
-    creature = serializers.SlugRelatedField(
-        many=False, read_only=True, slug_field="name"
-    )
-    resource = serializers.SlugRelatedField(
-        many=False, read_only=True, slug_field="name"
-    )
-    spell = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
-    secondary_skill = serializers.SlugRelatedField(
-        many=False, read_only=True, slug_field="name"
-    )
+class SpecialtyListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Specialty
+        fields = ("id", "name")
 
 
 class SpecialtyDetailSerializer(SpecialtySerializer):

@@ -108,8 +108,9 @@ class Specialty(models.Model):
     secondary_skill = models.ForeignKey(
         SecondarySkill, on_delete=models.CASCADE, null=True, blank=True
     )
-
-    def __str__(self) -> str:
+    
+    @property
+    def name(self) -> str:
         if self.creature:
             return f"{self.creature.name}"
         if self.resource:
@@ -118,6 +119,9 @@ class Specialty(models.Model):
             return f"{self.spell.name}"
         if self.secondary_skill:
             return f"{self.secondary_skill.name}"
+
+    def __str__(self) -> str:
+            return f"{self.name}"
 
 
 class Hero(models.Model):
