@@ -96,7 +96,5 @@ ITEM_PIPELINES = {
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 
-IMAGES_STORE = os.path.join(
-    "/opt/render/project/src", "/download/img/"
-)
+IMAGES_STORE = "/opt/render/project/src"
 IMAGES_URLS_FIELD = "picture_url"
