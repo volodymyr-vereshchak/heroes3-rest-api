@@ -97,6 +97,6 @@ REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 
 IMAGES_STORE = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "/download/img/"
+    "/opt/render/project/src", "/download/img/"
 )
 IMAGES_URLS_FIELD = "picture_url"
