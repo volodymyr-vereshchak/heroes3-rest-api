@@ -64,7 +64,7 @@ class HeroesScraperPipeline:
                     "level": int(item["level"]),
                     "upgrade": True if item["upgrade"] else False,
                     "attack": int(item["attack"]),
-                    "defence": int(item["defence"]),
+                    "defense": int(item["defense"]),
                     "min_damage": int(item["min_damage"]),
                     "max_damage": int(item["max_damage"]),
                     "hp": int(item["hp"]),

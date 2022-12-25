@@ -83,7 +83,7 @@ class Creature(models.Model):
     level = models.PositiveIntegerField()
     upgrade = models.BooleanField()
     attack = models.PositiveIntegerField()
-    defence = models.PositiveIntegerField()
+    defense = models.PositiveIntegerField()
     min_damage = models.PositiveIntegerField()
     max_damage = models.PositiveIntegerField()
     hp = models.PositiveIntegerField()

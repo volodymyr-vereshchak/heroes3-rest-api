@@ -67,7 +67,7 @@ class CreatureSerializer(serializers.ModelSerializer):
             "level",
             "upgrade",
             "attack",
-            "defence",
+            "defense",
             "min_damage",
             "max_damage",
             "hp",

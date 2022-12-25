@@ -59,7 +59,7 @@ class CreatureScraper(scrapy.Spider):
             item["level"] = creature.css("[title=Level]::text").get()
             item["upgrade"] = creature.css("[title=Level] sup::text").get()
             item["attack"] = creature.css("[title=Attack]::text").get()
-            item["defence"] = creature.css("[title=Defense]::text").get()
+            item["defense"] = creature.css("[title=Defense]::text").get()
             item["min_damage"] = creature.css("[title='Minimum Damage']::text").get()
             item["max_damage"] = creature.css("[title='Maximum Damage']::text").get()
             item["hp"] = creature.css("[title=Health]::text").get()
