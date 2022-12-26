@@ -13,9 +13,7 @@ class Command(BaseCommand):
         for i in range(int(os.environ.get("COUNTS_FOR_CONNECT_DB"))):
             try:
                 if connections["default"]:
-                    self.stdout.write(
-                        self.style.SUCCESS("db is successfully run!")
-                    )
+                    self.stdout.write(self.style.SUCCESS("db is successfully run!"))
                     return
             except OperationalError:
                 sleep(int(os.environ.get("TIMEOUT_FOR_CONNECT")))
