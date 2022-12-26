@@ -40,15 +40,11 @@ class SecondarySkillSerializer(serializers.ModelSerializer):
             "description",
             "picture_url",
         )
-    
+
     def to_representation(self, instance):
         result = super(SecondarySkillSerializer, self).to_representation(instance)
-        level = {
-            0: "Base",
-            1: "Advance",
-            2: "Expert"
-        }
-        result["level"] =level[result["level"]]
+        level = {0: "Base", 1: "Advance", 2: "Expert"}
+        result["level"] = level[result["level"]]
         return result
 
 
@@ -65,16 +61,10 @@ class SpellSerializer(serializers.ModelSerializer):
             "description_expert",
             "picture_url",
         )
-    
+
     def to_representation(self, instance):
         result = super(SpellSerializer, self).to_representation(instance)
-        school = {
-            0: "Fire",
-            1: "Air",
-            2: "Earth",
-            3: "Water",
-            None: "All schools"
-        }
+        school = {0: "Fire", 1: "Air", 2: "Earth", 3: "Water", None: "All schools"}
         result["magic_school"] = school[result["magic_school"]]
         return result
 
@@ -105,7 +95,7 @@ class SpecialtySerializer(serializers.ModelSerializer):
     class Meta:
         model = Specialty
         fields = ("id", "creature", "resource", "spell", "secondary_skill", "name")
-        read_only_fields = ("name", )
+        read_only_fields = ("name",)
 
     def to_representation(self, instance):
         result = super(SpecialtySerializer, self).to_representation(instance)
@@ -116,7 +106,7 @@ class SpecialtyListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Specialty
         fields = ("id", "name")
-        read_only_fields = ("name", )
+        read_only_fields = ("name",)
 
 
 class SpecialtyDetailSerializer(SpecialtySerializer):
