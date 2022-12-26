@@ -77,7 +77,6 @@ class SpecialtyView(ModelViewSet):
     queryset = Specialty.objects.all()
     permission_classes = [IsAdminOrReadOnly]
     filterset_class = SpecialtyFilter
-    filterset_fields = ["creature__name"]
 
     def get_serializer_class(self):
         if self.action == "list":

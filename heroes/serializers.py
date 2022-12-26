@@ -105,6 +105,7 @@ class SpecialtySerializer(serializers.ModelSerializer):
     class Meta:
         model = Specialty
         fields = ("id", "creature", "resource", "spell", "secondary_skill", "name")
+        read_only_fields = ("name", )
 
     def to_representation(self, instance):
         result = super(SpecialtySerializer, self).to_representation(instance)
@@ -115,6 +116,7 @@ class SpecialtyListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Specialty
         fields = ("id", "name")
+        read_only_fields = ("name", )
 
 
 class SpecialtyDetailSerializer(SpecialtySerializer):
@@ -157,9 +159,7 @@ class HeroListSerializer(HeroSerializer):
     hero_class = serializers.SlugRelatedField(
         many=False, read_only=True, slug_field="name"
     )
-    specialty = serializers.SlugRelatedField(
-        many=False, read_only=True, slug_field="name"
-    )
+    specialty = serializers.StringRelatedField(many=False)
     secondary_skill_first = serializers.SlugRelatedField(
         many=False, read_only=True, slug_field="name"
     )

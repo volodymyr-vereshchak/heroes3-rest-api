@@ -165,7 +165,7 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
     ],
-    "DEFAULT_THROTTLE_RATES": {"anon": "10/day", "user": "30/day"},
+    "DEFAULT_THROTTLE_RATES": {"anon": "1000000/day", "user": "30/day"},
 }
 
 SPECTACULAR_SETTINGS = {

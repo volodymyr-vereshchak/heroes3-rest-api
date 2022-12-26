@@ -120,6 +120,8 @@ class Specialty(models.Model):
         if self.secondary_skill:
             return f"{self.secondary_skill.name}"
 
+        return None
+
     def __str__(self) -> str:
         return f"{self.name}"
 
