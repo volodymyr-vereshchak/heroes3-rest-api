@@ -7,3 +7,4 @@ db.sqlite3
 /heroes_scraper/download
 .idea/
 todo
+.vscode
