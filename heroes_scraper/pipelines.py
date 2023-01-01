@@ -94,15 +94,14 @@ class HeroesScraperPipeline:
 
             magic_school = item["magic_school"]
             if magic_school is not None:
+                school_dict = {
+                    "Fire": 0,
+                    "Air": 1,
+                    "Earth": 2,
+                    "Water": 3
+                }
                 magic_school = magic_school.split()[0]
-                if magic_school == "Fire":
-                    school = 0
-                if magic_school == "Air":
-                    school = 1
-                if magic_school == "Earth":
-                    school = 2
-                if magic_school == "Water":
-                    school = 3
+                school = school_dict[magic_school]
             else:
                 school = None
 
