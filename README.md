@@ -25,6 +25,6 @@ DROPBOX_ROOT_PATH = DROPBOX_ROOT_PATH
 You can test api on the next links:
 
 - Heroes API: https://heroes-3-api.onrender.com/api/heroes/
-- User API: https://heroes-3-api.onrender.com/api/user/ (register/token/refresh)
+- User API: https://heroes-3-api.onrender.com/api/user/register (/token/refresh)
 - Swagger: https://heroes-3-api.onrender.com/api/schema/swagger-ui/
 - Redoc: https://heroes-3-api.onrender.com/api/schema/redoc/
